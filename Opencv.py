@@ -2,7 +2,7 @@ import cv2 as cv
 import numpy as np
 import time
 
-video_capture = cv.VideoCapture(2)
+video_capture = cv.VideoCapture(0)
 prevCircle = None
 dist = lambda x1,y1,x2,y2: (x1-x2)**2 + (y1-y2)**2
 prev_frame_time = 0
@@ -26,8 +26,9 @@ while True:
     cv.putText(frame, fps, (7, 70), font, 3, 3, cv.LINE_AA)
 
     circles = cv.HoughCircles(blurFrame, cv.HOUGH_GRADIENT, 1.4, 110,
-                              param1=160,param2=50,minRadius=10, maxRadius=100)
-    # param1 = sensibility paramqqqq2 = accurrancy
+                              param1=130,param2=60,minRadius=10, maxRadius=100)
+    # param1 = sensibility param2 = accurrancy
+    # prev: param1 = 160, param2 = 50
     if circles is not None:
         circles = np.uint16(np.around(circles))
         chosen = None
@@ -42,8 +43,6 @@ while True:
         cv.circle(frame,(chosen[0], chosen[1]), chosen[2], (255,0,255),3)
         prevCircle = chosen 
 
-    
-    
     #cv.imshow('circles', blurFrame)
     cv.imshow('circles', frame)
 
