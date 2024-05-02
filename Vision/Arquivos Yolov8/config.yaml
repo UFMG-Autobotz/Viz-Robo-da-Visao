@@ -1,0 +1,6 @@
+path: /home/autobotz/Downloads/yolov8-orange-ball
+train: images
+val: images
+
+names:
+  0: bolinha
