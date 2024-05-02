@@ -1,0 +1,6 @@
+path: /home/franz/Downloads/train
+train: images
+val: images
+
+names:
+  0: bolinha
