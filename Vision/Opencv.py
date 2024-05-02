@@ -2,7 +2,7 @@ import cv2 as cv
 import numpy as np
 import time
 
-video_capture = cv.VideoCapture(2)
+video_capture = cv.VideoCapture(0)
 prevCircle = None
 dist = lambda x1,y1,x2,y2: (x1-x2)**2 + (y1-y2)**2
 prev_frame_time = 0
