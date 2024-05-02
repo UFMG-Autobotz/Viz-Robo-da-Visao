@@ -1,1 +1,9 @@
-lsdjfs
+Relatório Navegação Autobotz 02/05/2024 
+
+1- Baixamos o yolo v8 no computador da sede, ainda não testamos na orange
+https://github.com/ultralytics/ultralytics?tab=readme-ov-file
+2- criamos o dataset (aproximadamente 100 fotos) da bolinha seguindo o tutorial deste video:
+https://www.youtube.com/watch?v=m9fH9OWn8YM, os arquivos estão no computador da sede na pasta Images ( tirar mais)
+3- treinamos o algoritimo e escrevemos os scripts de tracking que identificam a bolinha diretamente da webcam em tempo real que estão no github da equipe, ( nos guiamos por esse repositório: 
+https://github.com/rifqisetiawaan/YOLOv8_Orange_Ball_Detect)
+
