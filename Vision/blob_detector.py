@@ -226,7 +226,7 @@ if __name__=="__main__":
     orange_max = (15, 200, 255) 
     
     #--- Define area limit [x_min, y_min, x_max, y_max] adimensional (0.0 to 1.0) starting from top left corner
-    window = [0.1, 0.1, 0.65, 0.75]
+    window = [0.25, 0.25, 0.65, 0.75]
     
     #-- IMAGE_SOURCE: either 'camera' or 'imagelist'
     SOURCE = 'video'
