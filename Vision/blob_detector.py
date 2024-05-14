@@ -1,5 +1,6 @@
 import cv2
 import numpy as np;
+import time
 
 #---------- Blob detecting function: returns keypoints and mask
 #-- return keypoints, reversemask
@@ -134,10 +135,15 @@ def draw_window(image,              #- Input image
     
     #-- Draw a rectangle from top left to bottom right corner
     image = cv2.rectangle(image,(x_min_px,y_min_px),(x_max_px,y_max_px),color,line)
+    rectpos1 = x_min_px+255
+    rectpos2 = x_max_px-255
+
+    image2 = cv2.rectangle(image,(rectpos1,y_min_px),(rectpos2,y_max_px),(255,255,0),line)
     
     if imshow:
         # Show keypoints
         cv2.imshow("Keypoints", image)
+        cv2.imshow("rects", image2)
 
     return(image)
 
@@ -203,18 +209,19 @@ def blur_outside(image, blur=5, window_adim=[0.0, 0.0, 1.0, 1.0]):
     #--- return the mask
     return(mask)
     
-#---------- Obtain the camera relative frame coordinate of one single keypoint
-#-- return(x,y)
-def get_blob_relative_position(image, keyPoint):
-    rows = float(image.shape[0])
-    cols = float(image.shape[1])
-    # print(rows, cols)
-    center_x    = 0.5*cols
-    center_y    = 0.5*rows
-    # print(center_x)
-    x = (keyPoint.pt[0] - center_x)/(center_x)
-    y = (keyPoint.pt[1] - center_y)/(center_y)
-    return(x,y)
+# #---------- Obtain the camera relative frame coordinate of one single keypoint
+# #-- return(x,y)
+# def get_blob_relative_position(image, keyPoint):
+#     rows = float(image.shape[0])
+#     cols = float(image.shape[1])
+#     # print(rows, cols)
+#     center_x    = 0.5*cols
+#     center_y    = 0.5*rows
+#     print(center_x)
+#     print(center_y)
+#     x = (keyPoint.pt[0] - center_x)/(center_x)
+#     y = (keyPoint.pt[1] - center_y)/(center_y)
+#     return(x,y)
         
  
         
@@ -226,7 +233,7 @@ if __name__=="__main__":
     orange_max = (15, 200, 255) 
     
     #--- Define area limit [x_min, y_min, x_max, y_max] adimensional (0.0 to 1.0) starting from top left corner
-    window = [0.25, 0.25, 0.65, 0.75]
+    window = [0, 0, 1.0, 1.0]
     
     #-- IMAGE_SOURCE: either 'camera' or 'imagelist'
     SOURCE = 'video'
@@ -250,35 +257,14 @@ if __name__=="__main__":
             #-- click ENTER on the image window to proceed
             draw_keypoints(frame, keypoints, imshow=True)
 
+
+            pts = cv2.KeyPoint_convert(keypoints)
+            x_pos = [pt[0] for pt in pts]
+            for x in x_pos:
+                print(x)
+            
+
             #-- press q to quit
             if cv2.waitKey(1) & 0xFF == ord('q'):
                 break
         
-    # else:
-    #     #-- Read image list from file:
-    #     image_list = []
-    #     image_list.append(cv2.imread("blob.jpg"))
-    #     #image_list.append(cv2.imread("blob2.jpg"))
-    #     #image_list.append(cv2.imread("blob3.jpg"))
-
-    #     for image in image_list:
-    #         #-- Detect keypoints
-    #         keypoints, _ = blob_detect(image, orange_min, orange_max, blur=5, 
-    #                                     blob_params=None, search_window=window, imshow=True)
-            
-    #         image    = blur_outside(image, blur=15, window_adim=window)
-    #         cv2.imshow("Outside Blur", image)
-    #         cv2.waitKey(0)            
-            
-    #         image     = draw_window(image, window, imshow=True)
-    #         #-- enter to proceed
-    #         cv2.waitKey(0)
-            
-    #         #-- click ENTER on the image window to proceed
-    #         image     = draw_keypoints(image, keypoints, imshow=True)            
-    #         cv2.waitKey(0)
-    #         #-- Draw search window
-        
-    #         image    = draw_frame(image)
-    #         cv2.imshow("Frame", image)
-    #         cv2.waitKey(0)
