@@ -1,10 +1,10 @@
 import cv2
 import numpy as np;
+import time
 import wiringpi
 from wiringpi import GPIO
 import curses
 
-#--------------------------
 wiringpi.wiringPiSetup()
 
 wiringpi.pinMode(2, GPIO.OUTPUT)
@@ -17,7 +17,22 @@ screen = curses.initscr()
 curses.noecho()
 curses.cbreak()
 screen.keypad(True)
-#-------------------------
+
+#>385 -> R
+#<255 -> L
+
+#-----------------direction calculation-----------------------
+
+
+def calculate_move(x_pos):
+    global direction
+    if x_pos < 255:
+        direction = "left"
+    elif x_pos>385:
+        direction = "right"
+    elif x_pos>255 and x_pos < 385:
+        direction = "ahead"
+#------------------------------------------------------------
 
 #---------- Blob detecting function: returns keypoints and mask
 #-- return keypoints, reversemask
@@ -152,10 +167,15 @@ def draw_window(image,              #- Input image
     
     #-- Draw a rectangle from top left to bottom right corner
     image = cv2.rectangle(image,(x_min_px,y_min_px),(x_max_px,y_max_px),color,line)
+    rectpos1 = x_min_px+255
+    rectpos2 = x_max_px-255
+
+    image2 = cv2.rectangle(image,(rectpos1,y_min_px),(rectpos2,y_max_px),(255,255,0),line)
     
     if imshow:
         # Show keypoints
         cv2.imshow("Keypoints", image)
+        cv2.imshow("rects", image2)
 
     return(image)
 
@@ -221,18 +241,19 @@ def blur_outside(image, blur=5, window_adim=[0.0, 0.0, 1.0, 1.0]):
     #--- return the mask
     return(mask)
     
-#---------- Obtain the camera relative frame coordinate of one single keypoint
-#-- return(x,y)
-def get_blob_relative_position(image, keyPoint):
-    rows = float(image.shape[0])
-    cols = float(image.shape[1])
-    # print(rows, cols)
-    center_x    = 0.5*cols
-    center_y    = 0.5*rows
-    # print(center_x)
-    x = (keyPoint.pt[0] - center_x)/(center_x)
-    y = (keyPoint.pt[1] - center_y)/(center_y)
-    return(x,y)
+# #---------- Obtain the camera relative frame coordinate of one single keypoint
+# #-- return(x,y)
+# def get_blob_relative_position(image, keyPoint):
+#     rows = float(image.shape[0])
+#     cols = float(image.shape[1])
+#     # print(rows, cols)
+#     center_x    = 0.5*cols
+#     center_y    = 0.5*rows
+#     print(center_x)
+#     print(center_y)
+#     x = (keyPoint.pt[0] - center_x)/(center_x)
+#     y = (keyPoint.pt[1] - center_y)/(center_y)
+#     return(x,y)
         
  
         
@@ -244,7 +265,7 @@ if __name__=="__main__":
     orange_max = (15, 200, 255) 
     
     #--- Define area limit [x_min, y_min, x_max, y_max] adimensional (0.0 to 1.0) starting from top left corner
-    window = [0.0, 0.0, 1.0, 1.0]
+    window = [0, 0, 1.0, 1.0]
     
     #-- IMAGE_SOURCE: either 'camera' or 'imagelist'
     SOURCE = 'video'
@@ -268,35 +289,31 @@ if __name__=="__main__":
             #-- click ENTER on the image window to proceed
             draw_keypoints(frame, keypoints, imshow=True)
 
+
+            pts = cv2.KeyPoint_convert(keypoints)
+            x_pos = [pt[0] for pt in pts]
+            for x in x_pos:
+                #control in here
+                calculate_move(x)
+                if direction == "ahead":
+                    wiringpi.digitalWrite(1, GPIO.HIGH)
+                    wiringpi.digitalWrite(2, GPIO.LOW)
+                    wiringpi.digitalWrite(5, GPIO.HIGH)
+                    wiringpi.digitalWrite(7, GPIO.LOW)
+                elif direction == "left":
+                    wiringpi.digitalWrite(1, GPIO.HIGH)
+                    wiringpi.digitalWrite(2, GPIO.LOW)
+                    wiringpi.digitalWrite(5, GPIO.LOW)
+                    wiringpi.digitalWrite(7, GPIO.HIGH)    
+                elif direction == "right":
+                    wiringpi.digitalWrite(1, GPIO.LOW)
+                    wiringpi.digitalWrite(2, GPIO.HIGH)
+                    wiringpi.digitalWrite(5, GPIO.HIGH)
+                    wiringpi.digitalWrite(7, GPIO.LOW)    
+                print(x)
+            
+
             #-- press q to quit
             if cv2.waitKey(1) & 0xFF == ord('q'):
                 break
         
-    # else:
-    #     #-- Read image list from file:
-    #     image_list = []
-    #     image_list.append(cv2.imread("blob.jpg"))
-    #     #image_list.append(cv2.imread("blob2.jpg"))
-    #     #image_list.append(cv2.imread("blob3.jpg"))
-
-    #     for image in image_list:
-    #         #-- Detect keypoints
-    #         keypoints, _ = blob_detect(image, orange_min, orange_max, blur=5, 
-    #                                     blob_params=None, search_window=window, imshow=True)
-            
-    #         image    = blur_outside(image, blur=15, window_adim=window)
-    #         cv2.imshow("Outside Blur", image)
-    #         cv2.waitKey(0)            
-            
-    #         image     = draw_window(image, window, imshow=True)
-    #         #-- enter to proceed
-    #         cv2.waitKey(0)
-            
-    #         #-- click ENTER on the image window to proceed
-    #         image     = draw_keypoints(image, keypoints, imshow=True)            
-    #         cv2.waitKey(0)
-    #         #-- Draw search window
-        
-    #         image    = draw_frame(image)
-    #         cv2.imshow("Frame", image)
-    #         cv2.waitKey(0)
