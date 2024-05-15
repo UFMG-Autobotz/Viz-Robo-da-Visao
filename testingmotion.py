@@ -27,6 +27,8 @@ def calculate_move(x_pos):
         direction = "right"
     elif x_pos>255 and x_pos < 385:
         direction = "ahead"
+    else:
+        direction = "o"
 #------------------------------------------------------------
 
 #---------- Blob detecting function: returns keypoints and mask
@@ -256,8 +258,8 @@ def blur_outside(image, blur=5, window_adim=[0.0, 0.0, 1.0, 1.0]):
 if __name__=="__main__":
 
     #--- Define HSV limits
-    orange_min = (0,147,150)
-    orange_max = (45, 255, 245) 
+    orange_min = (0,160,0)
+    orange_max = (170, 255, 255) 
     
     #--- Define area limit [x_min, y_min, x_max, y_max] adimensional (0.0 to 1.0) starting from top left corner
     window = [0, 0, 1.0, 1.0]
@@ -310,7 +312,12 @@ if __name__=="__main__":
                     wiringpi.digitalWrite(1, GPIO.LOW)
                     wiringpi.digitalWrite(2, GPIO.HIGH)
                     wiringpi.digitalWrite(5, GPIO.HIGH)
-                    wiringpi.digitalWrite(7, GPIO.LOW)    
+                    wiringpi.digitalWrite(7, GPIO.LOW)   
+                elif direction == "o":
+                    wiringpi.digitalWrite(1, GPIO.LOW)
+                    wiringpi.digitalWrite(2, GPIO.LOW)
+                    wiringpi.digitalWrite(5, GPIO.LOW)
+                    wiringpi.digitalWrite(7, GPIO.LOW)  
             except:
                 print("Erro")
             #-- press q to quit
