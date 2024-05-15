@@ -271,6 +271,8 @@ if __name__=="__main__":
         while(True):
             # Capture frame-by-frame
             ret, frame = cap.read()
+
+            frame = cv2.resize(frame, (0, 0), None, .5, .5)
             
             #-- Detect keypoints
             keypoints, _ = blob_detect(frame, orange_min, orange_max, blur=3, 
@@ -283,6 +285,8 @@ if __name__=="__main__":
 
             #-- click ENTER on the image window to proceed
             draw_keypoints(frame, keypoints, imshow=True)
+
+            
 
 
             pts = cv2.KeyPoint_convert(keypoints)
