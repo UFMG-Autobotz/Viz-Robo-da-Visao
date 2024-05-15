@@ -272,10 +272,10 @@ if __name__=="__main__":
             # Capture frame-by-frame
             ret, frame = cap.read()
 
-            frame = cv2.resize(frame, (240, 240), None)
+            frame = cv2.resize(frame, (0, 0), None, .25, .25)
             
             #-- Detect keypoints
-            keypoints, _ = blob_detect(frame, orange_min, orange_max, blur=3, 
+            keypoints, _ = blob_detect(frame, orange_min, orange_max, blur=10, 
                                         blob_params=None, search_window=window, imshow=False)
             #-- Draw search window
             frame     = draw_window(frame, window)
