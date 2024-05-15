@@ -294,20 +294,23 @@ if __name__=="__main__":
                 #control in here
                 calculate_move(x_pos[0])
                 if direction == "ahead":
-                    wiringpi.digitalWrite(1, GPIO.HIGH)
-                    wiringpi.digitalWrite(2, GPIO.LOW)
-                    wiringpi.digitalWrite(5, GPIO.HIGH)
-                    wiringpi.digitalWrite(7, GPIO.LOW)
+                    print(direction)
+                    # wiringpi.digitalWrite(1, GPIO.HIGH)
+                    # wiringpi.digitalWrite(2, GPIO.LOW)
+                    # wiringpi.digitalWrite(5, GPIO.HIGH)
+                    # wiringpi.digitalWrite(7, GPIO.LOW)
                 elif direction == "left":
-                    wiringpi.digitalWrite(1, GPIO.HIGH)
-                    wiringpi.digitalWrite(2, GPIO.LOW)
-                    wiringpi.digitalWrite(5, GPIO.LOW)
-                    wiringpi.digitalWrite(7, GPIO.HIGH)    
+                    print(direction)
+                    # wiringpi.digitalWrite(1, GPIO.HIGH)
+                    # wiringpi.digitalWrite(2, GPIO.LOW)
+                    # wiringpi.digitalWrite(5, GPIO.LOW)
+                    # wiringpi.digitalWrite(7, GPIO.HIGH)    
                 elif direction == "right":
-                    wiringpi.digitalWrite(1, GPIO.LOW)
-                    wiringpi.digitalWrite(2, GPIO.HIGH)
-                    wiringpi.digitalWrite(5, GPIO.HIGH)
-                    wiringpi.digitalWrite(7, GPIO.LOW)    
+                    print(direction)
+                    # wiringpi.digitalWrite(1, GPIO.LOW)
+                    # wiringpi.digitalWrite(2, GPIO.HIGH)
+                    # wiringpi.digitalWrite(5, GPIO.HIGH)
+                    # wiringpi.digitalWrite(7, GPIO.LOW)    
             except:
                 print("Erro")
             #-- press q to quit
