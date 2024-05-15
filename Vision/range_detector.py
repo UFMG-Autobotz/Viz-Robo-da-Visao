@@ -2,9 +2,9 @@ import cv2
 import argparse
 from operator import xor
 
-# python3 range_detector --filter HSV --webcam --preview
+# python3 range_detector.py --filter HSV --webcam --preview
 # ou
-# python3 range_detector --filter RGB --webcam --preview
+# python3 range_detector.py --filter RGB --webcam --preview
 
 
 
