@@ -272,7 +272,7 @@ if __name__=="__main__":
             # Capture frame-by-frame
             ret, frame = cap.read()
 
-            frame = cv2.resize(frame, (0, 0), None, .75, .75)
+            frame = cv2.resize(frame, (0, 0), None, .25, .25)
             
             #-- Detect keypoints
             keypoints, _ = blob_detect(frame, orange_min, orange_max, blur=3, 
@@ -288,27 +288,26 @@ if __name__=="__main__":
 
             
 
-
             pts = cv2.KeyPoint_convert(keypoints)
             x_pos = [pt[0] for pt in pts]
-            #control in here
-            calculate_move(x_pos[0])
-            if direction == "ahead":
-                wiringpi.digitalWrite(1, GPIO.HIGH)
-                wiringpi.digitalWrite(2, GPIO.LOW)
-                wiringpi.digitalWrite(5, GPIO.HIGH)
-                wiringpi.digitalWrite(7, GPIO.LOW)
-            elif direction == "left":
-                wiringpi.digitalWrite(1, GPIO.HIGH)
-                wiringpi.digitalWrite(2, GPIO.LOW)
-                wiringpi.digitalWrite(5, GPIO.LOW)
-                wiringpi.digitalWrite(7, GPIO.HIGH)    
-            elif direction == "right":
-                wiringpi.digitalWrite(1, GPIO.LOW)
-                wiringpi.digitalWrite(2, GPIO.HIGH)
-                wiringpi.digitalWrite(5, GPIO.HIGH)
-                wiringpi.digitalWrite(7, GPIO.LOW)    
-
+            if x_pos is not None:
+                #control in here
+                calculate_move(x_pos[0])
+                if direction == "ahead":
+                    wiringpi.digitalWrite(1, GPIO.HIGH)
+                    wiringpi.digitalWrite(2, GPIO.LOW)
+                    wiringpi.digitalWrite(5, GPIO.HIGH)
+                    wiringpi.digitalWrite(7, GPIO.LOW)
+                elif direction == "left":
+                    wiringpi.digitalWrite(1, GPIO.HIGH)
+                    wiringpi.digitalWrite(2, GPIO.LOW)
+                    wiringpi.digitalWrite(5, GPIO.LOW)
+                    wiringpi.digitalWrite(7, GPIO.HIGH)    
+                elif direction == "right":
+                    wiringpi.digitalWrite(1, GPIO.LOW)
+                    wiringpi.digitalWrite(2, GPIO.HIGH)
+                    wiringpi.digitalWrite(5, GPIO.HIGH)
+                    wiringpi.digitalWrite(7, GPIO.LOW)    
             
 
             #-- press q to quit
