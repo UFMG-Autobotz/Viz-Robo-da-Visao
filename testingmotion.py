@@ -290,7 +290,7 @@ if __name__=="__main__":
 
             pts = cv2.KeyPoint_convert(keypoints)
             x_pos = [pt[0] for pt in pts]
-            if x_pos is not None:
+            try:
                 #control in here
                 calculate_move(x_pos[0])
                 if direction == "ahead":
@@ -308,8 +308,8 @@ if __name__=="__main__":
                     wiringpi.digitalWrite(2, GPIO.HIGH)
                     wiringpi.digitalWrite(5, GPIO.HIGH)
                     wiringpi.digitalWrite(7, GPIO.LOW)    
-            
-
+            except:
+                print("Erro")
             #-- press q to quit
             if cv2.waitKey(1) & 0xFF == ord('q'):
                 break
