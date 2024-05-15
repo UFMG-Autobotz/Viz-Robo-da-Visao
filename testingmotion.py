@@ -256,8 +256,8 @@ def blur_outside(image, blur=5, window_adim=[0.0, 0.0, 1.0, 1.0]):
 if __name__=="__main__":
 
     #--- Define HSV limits
-    orange_min = (0,115,110)
-    orange_max = (15, 200, 255) 
+    orange_min = (0,147,150)
+    orange_max = (45, 255, 245) 
     
     #--- Define area limit [x_min, y_min, x_max, y_max] adimensional (0.0 to 1.0) starting from top left corner
     window = [0, 0, 1.0, 1.0]
