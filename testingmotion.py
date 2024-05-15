@@ -304,7 +304,7 @@ if __name__=="__main__":
                 wiringpi.digitalWrite(2, GPIO.HIGH)
                 wiringpi.digitalWrite(5, GPIO.HIGH)
                 wiringpi.digitalWrite(7, GPIO.LOW)    
-            print(x)
+
             
 
             #-- press q to quit
