@@ -320,6 +320,10 @@ if __name__=="__main__":
                     wiringpi.digitalWrite(7, GPIO.LOW)  
             except:
                 print("Erro")
+                wiringpi.digitalWrite(1, GPIO.LOW)
+                wiringpi.digitalWrite(2, GPIO.LOW)
+                wiringpi.digitalWrite(5, GPIO.LOW)
+                wiringpi.digitalWrite(7, GPIO.LOW)
             #-- press q to quit
             if cv2.waitKey(1) & 0xFF == ord('q'):
                 break
