@@ -1,19 +1,44 @@
+#! /usr/bin/env python3
+
 import serial
+import time
+
+
 MAX_BUFF_LEN = 255
+SETUP 		 = False
+port 		 = None
 
-port = serial.Serial("/dev/ttyUSB0", 115200, timeout=1)
+prev = time.time()
+while(not SETUP):
+	try:
+		# 					 Serial port(windows-->COM), baud rate, timeout msg
+		port = serial.Serial("/dev/ttyUSB0", 115200, timeout=1)
 
-def read_serial(num_char = 1):
-    str = port.read(num_char)
-    return str.decode(errors='ignore')
+	except: # Bad way of writing excepts (always know your errors)
+		if(time.time() - prev > 2): # Don't spam with msg
+			print("No serial detected, please plug your uController")
+			prev = time.time()
 
-def write_serial(cmd):
-    cmd = cmd + '\n'
-    port.write(cmd.encode())
+	if(port is not None): # We're connected
+		SETUP = True
 
-while(True):
-    str = read_serial(MAX_BUFF_LEN)
-    print(str)
 
-    cmd = input()
-    write_serial(cmd)
+# read one char (default)
+def read_ser(num_char = 1):
+	string = port.read(num_char)
+	return string.decode(errors="ignore")
+
+# Write whole strings
+def write_ser(cmd):
+	cmd = cmd + '\n'
+	port.write(cmd.encode())
+
+# Super loop
+while(1):
+	string = read_ser(MAX_BUFF_LEN)
+	if(len(string)):
+		print(string)
+
+	cmd = input() # Blocking, there're solutions for this ;)
+	if(cmd):
+		write_ser(cmd)
