@@ -305,8 +305,6 @@ if __name__=="__main__":
                         write_serial('q') 
                     print(direction)
             except:
-                if port.in_waiting() > 0:
-                    write_serial('q')
                 print("Erro")
 
             if cv2.waitKey(1) & 0xFF == ord('z'):
