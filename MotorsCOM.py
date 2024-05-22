@@ -303,8 +303,7 @@ if __name__=="__main__":
                     write_serial(cmd) 
                     print(direction)
             except:
-                cmd = direction
-                write_serial(cmd)
+                write_serial('q')
                 print("Erro")
 
             if cv2.waitKey(1) & 0xFF == ord('z'):
