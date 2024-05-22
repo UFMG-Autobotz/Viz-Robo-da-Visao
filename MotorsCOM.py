@@ -32,7 +32,7 @@ def calculate_move(x_pos):
     elif x_pos>385:
         direction = "d right"
     elif x_pos>170 and x_pos < 385:
-        direction = "w head"
+        direction = "w ahead"
     else:
         direction = "q"
 #------------------------------------------------------------
