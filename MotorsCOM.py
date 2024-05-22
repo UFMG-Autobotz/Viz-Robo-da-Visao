@@ -286,23 +286,23 @@ if __name__=="__main__":
 
                 if direction == "w ahead":
                     cmd = direction
-                    if port.in_waiting() > 0:
-                        write_serial('w')
+                    # if port.in_waiting() > 0:
+                    #     write_serial('w')
                     print(direction)
                 elif direction == "a left":
                     cmd = direction
-                    if port.in_waiting() > 0:
-                        write_serial('d')
+                    # if port.in_waiting() > 0:
+                    #     write_serial('d')
                     print(direction)   
                 elif direction == "d right":
                     cmd = direction
-                    if port.in_waiting() > 0:
-                        write_serial('a')
+                    # if port.in_waiting() > 0:
+                    #     write_serial('a')
                     print(direction)  
                 elif direction == "q":
                     cmd = direction
-                    if port.in_waiting() > 0:
-                        write_serial('q') 
+                    # if port.in_waiting() > 0:
+                    #     write_serial('q') 
                     print(direction)
             except:
                 print("Erro")
