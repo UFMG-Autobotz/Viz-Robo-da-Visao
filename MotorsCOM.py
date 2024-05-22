@@ -292,11 +292,11 @@ if __name__=="__main__":
                     print(direction)
                 elif direction == "a left":
                     cmd = direction
-                    write_serial('a')
+                    write_serial('d')
                     print(direction)   
                 elif direction == "d right":
                     cmd = direction
-                    write_serial('d')
+                    write_serial('a')
                     print(direction)  
                 elif direction == "q":
                     cmd = direction
