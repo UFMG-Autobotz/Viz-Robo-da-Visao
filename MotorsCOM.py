@@ -262,7 +262,7 @@ if __name__=="__main__":
             # Capture frame-by-frame
             ret, frame = cap.read()
 
-            frame = cv2.resize(frame, (0, 0), None, .25, .25)
+            frame = cv2.resize(frame, (0, 0), None, .75, .75)
             
             #-- Detect keypoints
             keypoints, _ = blob_detect(frame, orange_min, orange_max, blur=10, 
@@ -288,19 +288,19 @@ if __name__=="__main__":
 
                 if direction == "w ahead":
                     cmd = direction
-                    write_serial(cmd)
+                    write_serial('w')
                     print(direction)
                 elif direction == "a left":
                     cmd = direction
-                    write_serial(cmd)
+                    write_serial('a')
                     print(direction)   
                 elif direction == "d right":
                     cmd = direction
-                    write_serial(cmd)
+                    write_serial('d')
                     print(direction)  
                 elif direction == "q":
                     cmd = direction
-                    write_serial(cmd) 
+                    write_serial('q') 
                     print(direction)
             except:
                 write_serial('q')
