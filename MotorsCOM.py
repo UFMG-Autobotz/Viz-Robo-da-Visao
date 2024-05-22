@@ -8,6 +8,8 @@ MAX_BUFF_LEN = 255
 
 port = serial.Serial("/dev/ttyUSB0", 115200, timeout=1)
 
+last_direction = 'q'
+
 def read_serial(num_char = 1):
     str = port.read(num_char)
     return str.decode(errors='ignore')
@@ -24,7 +26,7 @@ def write_serial(cmd):
 
 
 def calculate_move(x_pos):
-    global direction
+    global direction, last_direction
     if x_pos < 255:
         direction = "a left"
     elif x_pos>385:
@@ -283,27 +285,24 @@ if __name__=="__main__":
             try:
                 #control in here
                 calculate_move(x_pos[0])
-
-                if direction == "w ahead":
+                if direction == "w ahead" and direction != last_direction:
                     cmd = direction
-                    # if port.in_waiting() > 0:
                     #     write_serial('w')
                     print(direction)
-                elif direction == "a left":
+                elif direction == "a left" and direction != last_direction:
                     cmd = direction
-                    # if port.in_waiting() > 0:
                     #     write_serial('d')
                     print(direction)   
-                elif direction == "d right":
+                elif direction == "d right" and direction != last_direction:
                     cmd = direction
-                    # if port.in_waiting() > 0:
                     #     write_serial('a')
                     print(direction)  
-                elif direction == "q":
+                elif direction == "q" and direction != last_direction:
                     cmd = direction
-                    # if port.in_waiting() > 0:
                     #     write_serial('q') 
                     print(direction)
+                
+                last_direction = direction
             except:
                 print("Erro")
 
