@@ -287,19 +287,19 @@ if __name__=="__main__":
                 calculate_move(x_pos[0])
                 if direction == "w ahead" and direction != last_direction:
                     cmd = direction
-                    #     write_serial('w')
+                    write_serial('w')
                     print(direction)
                 elif direction == "a left" and direction != last_direction:
                     cmd = direction
-                    #     write_serial('d')
+                    write_serial('d')
                     print(direction)   
                 elif direction == "d right" and direction != last_direction:
                     cmd = direction
-                    #     write_serial('a')
+                    write_serial('a')
                     print(direction)  
                 elif direction == "q" and direction != last_direction:
                     cmd = direction
-                    #     write_serial('q') 
+                    write_serial('q') 
                     print(direction)
                 
                 last_direction = direction
