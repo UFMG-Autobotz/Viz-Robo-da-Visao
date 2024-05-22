@@ -283,27 +283,25 @@ if __name__=="__main__":
             try:
                 #control in here
                 calculate_move(x_pos[0])
-                str = read_serial(MAX_BUFF_LEN)
-                print(str)
 
                 if direction == "w ahead":
                     cmd = direction
-                    write_serial('w')
+                    #write_serial('w')
                     print(direction)
                 elif direction == "a left":
                     cmd = direction
-                    write_serial('d')
+                    #write_serial('d')
                     print(direction)   
                 elif direction == "d right":
                     cmd = direction
-                    write_serial('a')
+                    #write_serial('a')
                     print(direction)  
                 elif direction == "q":
                     cmd = direction
-                    write_serial('q') 
+                    #write_serial('q') 
                     print(direction)
             except:
-                write_serial('q')
+                #write_serial('q')
                 print("Erro")
 
             if cv2.waitKey(1) & 0xFF == ord('z'):
