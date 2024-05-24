@@ -27,11 +27,11 @@ def write_serial(cmd):
 
 def calculate_move(x_pos):
     global direction, last_direction
-    if x_pos < 170:
+    if x_pos < 255:
         direction = "a left"
     elif x_pos>385:
         direction = "d right"
-    elif x_pos>170 and x_pos < 385:
+    elif x_pos>255 and x_pos < 385:
         direction = "w ahead"
     else:
         direction = "q"
@@ -304,7 +304,10 @@ if __name__=="__main__":
                 
                 last_direction = direction
             except:
-                print("Erro")
+                if last_direction != "Erro":
+                    write_serial('q')
+                    print("Erro")
+                    last_direction = "Erro"
 
             if cv2.waitKey(1) & 0xFF == ord('z'):
                 break
